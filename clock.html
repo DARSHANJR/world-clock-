@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>World Clock</title>
+<style>
+  body {
+    font-family: sans-serif;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  h1 {
+    color: #333;
+  }
+  .clock-container {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .clock {
+    background-color: #fff;
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    width: 250px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
+  .city {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #333;
+  }
+  .time {
+    font-size: 2em;
+    font-family: 'Courier New', Courier, monospace;
+    color: #007bff;
+  }
+  .time .colon {
+    animation: blink 1s infinite;
+  }
+  @keyframes blink {
+    50% {
+      opacity: 0;
+    }
+  }
+</style>
+</head>
+<body>
+
+<h1>World Clock</h1>
+
+<div class="clock-container">
+  <div class="clock">
+    <div class="city">New York</div>
+    <div class="time" id="ny-time"></div>
+  </div>
+
+  <div class="clock">
+    <div class="city">London</div>
+    <div class="time" id="london-time"></div>
+  </div>
+
+  <div class="clock">
+    <div class="city">Tokyo</div>
+    <div class="time" id="tokyo-time"></div>
+  </div>
+
+  <div class="clock">
+    <div class="city">India</div>
+    <div class="time" id="india-time"></div>
+  </div>
+</div>
+
+<script>
+function formatTime(date, timeZone) {
+  const options = {
+    timeZone: timeZone,
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: true
+  };
+  const timeString = date.toLocaleTimeString('en-US', options);
+  const parts = timeString.split(':');
+  return `${parts[0]}<span class="colon">:</span>${parts[1]}<span class="colon">:</span>${parts[2]}`;
+}
+
+function updateClocks() {
+  const now = new Date();
+
+  document.getElementById('ny-time').innerHTML = formatTime(now, 'America/New_York');
+  document.getElementById('london-time').innerHTML = formatTime(now, 'Europe/London');
+  document.getElementById('tokyo-time').innerHTML = formatTime(now, 'Asia/Tokyo');
+  document.getElementById('india-time').innerHTML = formatTime(now, 'Asia/Kolkata');
+}
+
+setInterval(updateClocks, 1000);
+updateClocks(); // initial call
+</script>
+
+</body>
+</html>
